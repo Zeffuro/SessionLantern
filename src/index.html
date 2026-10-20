@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Session Lantern</title>
+  <link rel="stylesheet" href="styles.css">
+  <script type="module" src="app.js"></script>
+  <script type="module" src="updates.js"></script>
+</head>
+<body>
+<main>
+  <header>
+    <div class="brand"><svg viewBox="0 0 64 64" aria-hidden="true"><path d="M25 17V10h14v7M18 18h28v32H18zM18 53h28"/><path class="flame" d="M32 25q15 19 0 19t0-19"/></svg><div><h1>Session Lantern</h1><p>A private bridge to your bot dashboard</p></div></div>
+    <span class="edition" id="app-version">DESKTOP</span>
+  </header>
+  <section class="intro"><span class="local-dot" aria-hidden="true"></span><p>Your session stays on this computer until you choose to export it. Exported files are password-encrypted.</p></section>
+  <section class="step">
+    <div class="step-heading"><span class="step-number">1</span><div><h2>Sign in to TikTok</h2><p>Use your bot account in a separate, private sign-in window.</p></div></div>
+    <div class="buttons"><button id="open-login" class="primary">Open TikTok sign-in <span aria-hidden="true">↗</span></button><button id="check-session" aria-describedby="keep-open">Check session</button></div>
+    <p id="keep-open" class="hint">Keep the TikTok sign-in window open while clicking <strong>Check session</strong> and until your encrypted session has been saved.</p>
+    <p class="hint">Cookies are checked automatically after a page load or refresh. TikTok’s “Something went wrong” page can still have the cookies needed for export.</p>
+    <p class="hint">Complete login and challenges yourself. Google/Facebook sign-in can open a separate window. Providers may require a regular browser; TikTok’s QR sign-in is another option.</p>
+  </section>
+  <section class="step">
+    <div class="step-heading"><span class="step-number">2</span><div><h2>Check the required cookies</h2><p id="readiness-summary" aria-live="polite">Nothing has been read yet.</p></div><span id="readiness-count" class="count">0 / 4</span></div>
+    <ul class="cookie-list" aria-label="Required cookies">
+      <li><span><strong>sessionid</strong><small>Account session</small></span><span data-cookie="sessionid" class="cookie-state">Not checked</span></li>
+      <li><span><strong>tt-target-idc</strong><small>Session region</small></span><span data-cookie="tt-target-idc" class="cookie-state">Not checked</span></li>
+      <li><span><strong>msToken</strong><small>Browser token</small></span><span data-cookie="msToken" class="cookie-state">Not checked</span></li>
+      <li><span><strong>s_v_web_id</strong><small>Browser identifier</small></span><span data-cookie="s_v_web_id" class="cookie-state">Not checked</span></li>
+    </ul>
+    <p class="hint">Only presence and format are checked here. For msToken, an active tiktok.com cookie is preferred over a www-only cookie for the bot’s shared session. Conflicts within the selected scope still prevent export. The dashboard verifies the configured bot account before saving.</p>
+  </section>
+  <section class="step">
+    <div class="step-heading"><span class="step-number">3</span><div><h2>Export your session</h2><p>Choose a password you’ll enter again when importing the file.</p></div></div>
+    <form id="export-form" autocomplete="off">
+      <div class="password-fields"><label>Export password<input id="password" type="password" autocomplete="new-password" minlength="12" maxlength="1024" required placeholder="At least 12 characters"></label><label>Repeat password<input id="password-confirm" type="password" autocomplete="new-password" minlength="12" maxlength="1024" required placeholder="Repeat your password"></label></div>
+      <div class="buttons password-tools"><button id="generate-password" type="button">Generate password</button><button id="copy-password" type="button" disabled>Copy password</button><button id="clear-password" type="button">Clear password</button><small>Kept in this window after saving, so you can copy it for import. Clear it when finished.</small></div>
+      <p id="export-feedback" class="result" role="status" aria-live="polite" tabindex="-1" hidden></p>
+      <div class="buttons"><button id="export-session" class="primary" type="submit" disabled>Save encrypted session</button><small>No password recovery. Keep the file and password private.</small></div>
+    </form>
+  </section>
+  <p id="status" class="status" role="status" aria-live="polite">Open the sign-in window to begin.</p>
+  <footer><span>Local checks after page loads · No automatic uploads</span><button id="clear-session" class="quiet">Clear local login</button></footer>
+  <section class="updates" aria-label="Application updates"><div class="buttons"><button id="check-updates" class="quiet">Check for updates</button><button id="open-releases" class="quiet">GitHub releases ↗</button></div><p id="update-status" role="status" aria-live="polite">Checks GitHub only when clicked. Updates are installed manually.</p></section>
+</main>
+<dialog id="clear-dialog"><h2>Clear this tool’s login?</h2><p>This removes browsing data from the dedicated sign-in window and closes it. Exported files are kept.</p><div class="buttons"><button id="cancel-clear">Cancel</button><button id="confirm-clear" class="primary">Clear login</button></div></dialog>
+</body>
+</html>
